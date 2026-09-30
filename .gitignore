@@ -1,3 +1,6 @@
 *.o
 monty
+monty.exe
+*.exe
+t/
 .vscode
