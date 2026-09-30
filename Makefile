@@ -3,12 +3,15 @@ NAME	= monty
 CFLAGS	= -Wall -Wextra -Werror -O2
 
 SRCS	= main.c \
-		parser.c \
+		check.c \
+		read.c \
+		parse.c \
 		execute.c \
-		utils.c \
-		ft_printf.c \
 		op_push.c \
-		op_pall.c
+		op_pall.c \
+		error.c \
+		ft_printf.c \
+		free.c
 
 OBJS	= $(SRCS:.c=.o)
 

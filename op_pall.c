@@ -1,10 +1,10 @@
 #include "monty.h"
 
-/*
-** op_pall - Print every value of the stack, from top to bottom
-** stack: the stack (t_stack *)
-** return: 0 (int)
-*/
+/**
+ * op_pall - Print every value of the stack, from the top to the bottom
+ * @stack: the stack
+ * Return: 0
+ */
 int	op_pall(t_stack *stack)
 {
 	t_stack	*node;
