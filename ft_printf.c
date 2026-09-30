@@ -2,22 +2,24 @@
 #include <unistd.h>
 
 /*
-** ft_putchar - Write one character on the standard output
+** ft_putchar - Write one character on a file descriptor
+** fd: the file descriptor to write on (int)
 ** c: the character to write (char)
 ** return: nothing
 */
-void	ft_putchar(char c)
+void	ft_putchar(int fd, char c)
 {
-	if (write(1, &c, 1) == -1)
+	if (write(fd, &c, 1) == -1)
 		return ;
 }
 
 /*
-** ft_putstr - Write a string on the standard output
+** ft_putstr - Write a string on a file descriptor
+** fd: the file descriptor to write on (int)
 ** str: the string to write (char *)
 ** return: nothing
 */
-void	ft_putstr(char *str)
+void	ft_putstr(int fd, char *str)
 {
 	int	len;
 
@@ -26,16 +28,17 @@ void	ft_putstr(char *str)
 		len++;
 	if (len == 0)
 		return ;
-	if (write(1, str, len) == -1)
+	if (write(fd, str, len) == -1)
 		return ;
 }
 
 /*
-** ft_putnbr - Write an integer on the standard output
+** ft_putnbr - Write an integer on a file descriptor
+** fd: the file descriptor to write on (int)
 ** n: the number to write (int)
 ** return: nothing
 */
-void	ft_putnbr(int n)
+void	ft_putnbr(int fd, int n)
 {
 	char	digits[12];
 	int		len;
@@ -44,7 +47,7 @@ void	ft_putnbr(int n)
 	len = 0;
 	if (n < 0)
 	{
-		ft_putchar('-');
+		ft_putchar(fd, '-');
 		n = -n;
 	}
 	if (n == 0)
@@ -59,7 +62,7 @@ void	ft_putnbr(int n)
 	i = len - 1;
 	while (i >= 0)
 	{
-		ft_putchar(digits[i]);
+		ft_putchar(fd, digits[i]);
 		i--;
 	}
 }

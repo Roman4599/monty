@@ -20,11 +20,8 @@ int	main(int argc, char **argv)
 	stack = NULL;
 	if (open_file(argv[1], &fd))
 		return (EXIT_FAILURE);
-	ret = parse_file(&instructions, fd);
+	ret = parse_file(&instructions, &stack, fd);
 	close(fd);
-	if (ret)
-		return (ret);
-	ret = execute(&instructions, &stack);
 	free_stack(stack);
 	free_instructions(instructions);
 	return (ret);

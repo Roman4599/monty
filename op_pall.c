@@ -12,8 +12,8 @@ int	op_pall(t_stack *stack)
 	node = stack;
 	while (node)
 	{
-		ft_putnbr(node->arg);
-		ft_putchar('\n');
+		ft_putnbr(1, node->arg);
+		ft_putchar(1, '\n');
 		node = node->next;
 	}
 	return (0);

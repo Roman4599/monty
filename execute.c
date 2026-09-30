@@ -2,26 +2,20 @@
 #include <string.h>
 
 /*
-** execute - Run every instruction of the list, in order
-** instructions: the instruction list (t_instructions **)
+** execute_one - Execute one instruction
+** op: the opcode of the instruction (char *)
+** arg: the argument of the instruction (int)
 ** stack: the stack (t_stack **)
 ** return: 0 on success, EXIT_FAILURE on error (int)
 */
-int	execute(t_instructions **instructions, t_stack **stack)
+int	execute_one(char *op, int arg, t_stack **stack)
 {
-	t_instructions	*instr;
-
-	instr = *instructions;
-	while (instr)
+	if (!strcmp(op, "push"))
 	{
-		if (!strcmp(instr->op, "push"))
-		{
-			if (op_push(stack, instr->arg))
-				return (EXIT_FAILURE);
-		}
-		else if (!strcmp(instr->op, "pall"))
-			op_pall(*stack);
-		instr = instr->next;
+		if (op_push(stack, arg))
+			return (EXIT_FAILURE);
 	}
+	else if (!strcmp(op, "pall"))
+		op_pall(*stack);
 	return (0);
 }

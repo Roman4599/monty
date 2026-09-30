@@ -2,30 +2,55 @@
 #include <string.h>
 
 /*
-** error - Print an error message related to a line of the file
+** error_prefix - Print the beginning of a line error message on stderr
+** line_number: line where the error occurs (int)
+** return: nothing
+*/
+void	error_prefix(int line_number)
+{
+	ft_putstr(2, "L");
+	ft_putnbr(2, line_number);
+	ft_putstr(2, ": ");
+}
+
+/*
+** error - Print an error message related to a line of the file, on stderr
 ** line_number: line where the error occurs (int)
 ** message: message to print (char *)
 ** return: EXIT_FAILURE (int)
 */
 int	error(int line_number, char *message)
 {
-	ft_putstr("L");
-	ft_putnbr(line_number);
-	ft_putstr(": ");
-	ft_putstr(message);
-	ft_putchar('\n');
+	error_prefix(line_number);
+	ft_putstr(2, message);
+	ft_putchar(2, '\n');
 	return (EXIT_FAILURE);
 }
 
 /*
-** fatal - Print a global error message, not related to a line
+** unknown_instruction - Print an unknown instruction error on stderr
+** line_number: line where the error occurs (int)
+** op: the unknown opcode (char *)
+** return: EXIT_FAILURE (int)
+*/
+int	unknown_instruction(int line_number, char *op)
+{
+	error_prefix(line_number);
+	ft_putstr(2, "unknown instruction ");
+	ft_putstr(2, op);
+	ft_putchar(2, '\n');
+	return (EXIT_FAILURE);
+}
+
+/*
+** fatal - Print a global error message on stderr, not related to a line
 ** message: message to print (char *)
 ** return: EXIT_FAILURE (int)
 */
 int	fatal(char *message)
 {
-	ft_putstr(message);
-	ft_putchar('\n');
+	ft_putstr(2, message);
+	ft_putchar(2, '\n');
 	return (EXIT_FAILURE);
 }
 

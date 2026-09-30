@@ -12,9 +12,9 @@
 int	check_args(int argc, char **argv)
 {
 	if (argc != 2)
-		return (fatal("usage: ./monty file"));
+		return (fatal("USAGE: monty file"));
 	if (!argv[1] || !argv[1][0])
-		return (fatal("usage: ./monty file"));
+		return (fatal("USAGE: monty file"));
 	return (0);
 }
 
@@ -28,7 +28,7 @@ int	open_file(char *path, int *fd)
 {
 	*fd = open(path, O_RDONLY);
 	if (*fd == -1)
-		return (fatal("can't open file"));
+		return (fatal("Error: Can't open file HoLbErToN"));
 	return (0);
 }
 
@@ -46,12 +46,12 @@ int	add_instr(t_instructions **instructions, char *op, int arg)
 
 	new = malloc(sizeof(t_instructions));
 	if (!new)
-		return (fatal("malloc failure"));
+		return (fatal("Error: malloc failure"));
 	new->op = ft_strdup(op);
 	if (!new->op)
 	{
 		free(new);
-		return (fatal("malloc failure"));
+		return (fatal("Error: malloc failure"));
 	}
 	new->arg = arg;
 	new->next = NULL;
@@ -68,13 +68,14 @@ int	add_instr(t_instructions **instructions, char *op, int arg)
 }
 
 /*
-** parse_line - Store the instruction(s) of one line of the file
+** parse_line - Store then execute the instruction(s) of one line
 ** instructions: the instruction list (t_instructions **)
 ** line: the line to parse (char *)
 ** line_number: number of the line in the file (int)
+** stack: the stack (t_stack **)
 ** return: 0 on success, EXIT_FAILURE on error (int)
 */
-int	parse_line(t_instructions **instructions, char *line, int line_number)
+int	parse_line(t_instructions **instructions, char *line, int line_number, t_stack **stack)
 {
 	char	*op;
 	char	*arg;
@@ -93,8 +94,10 @@ int	parse_line(t_instructions **instructions, char *line, int line_number)
 	else if (is_instruction(op))
 		value = 0;
 	else
-		return (error(line_number, "unknown instruction"));
-	return (add_instr(instructions, op, value));
+		return (unknown_instruction(line_number, op));
+	if (add_instr(instructions, op, value))
+		return (EXIT_FAILURE);
+	return (execute_one(op, value, stack));
 }
 
 /*
@@ -114,7 +117,7 @@ int	append_char(char **line, int *len, int *cap, char c)
 		*cap = *cap ? *cap * 2 : 64;
 		tmp = realloc(*line, *cap);
 		if (!tmp)
-			return (fatal("realloc failure"));
+			return (fatal("Error: realloc failure"));
 		*line = tmp;
 	}
 	(*line)[*len] = c;
@@ -130,9 +133,10 @@ int	append_char(char **line, int *len, int *cap, char c)
 ** len: current length of the line (int *)
 ** cap: current capacity of the line (int *)
 ** line_number: number of the line in the file (int)
+** stack: the stack (t_stack **)
 ** return: 0 on success, EXIT_FAILURE on error (int)
 */
-int	handle_line(t_instructions **instructions, char **line, int *len, int *cap, int line_number)
+int	handle_line(t_instructions **instructions, char **line, int *len, int *cap, int line_number, t_stack **stack)
 {
 	int	ret;
 
@@ -140,10 +144,10 @@ int	handle_line(t_instructions **instructions, char **line, int *len, int *cap, 
 	if (*line)
 	{
 		(*line)[*len] = '\0';
-		ret = parse_line(instructions, *line, line_number);
+		ret = parse_line(instructions, *line, line_number, stack);
 	}
 	else
-		ret = parse_line(instructions, "", line_number);
+		ret = parse_line(instructions, "", line_number, stack);
 	free(*line);
 	*line = NULL;
 	*len = 0;
@@ -152,12 +156,13 @@ int	handle_line(t_instructions **instructions, char **line, int *len, int *cap, 
 }
 
 /*
-** parse_file - Read the file and store every instruction it contains
+** parse_file - Read the file, then store and execute every instruction
 ** instructions: the instruction list (t_instructions **)
+** stack: the stack (t_stack **)
 ** fd: file descriptor of the file to read (int)
 ** return: 0 on success, EXIT_FAILURE on error (int)
 */
-int	parse_file(t_instructions **instructions, int fd)
+int	parse_file(t_instructions **instructions, t_stack **stack, int fd)
 {
 	char	*line;
 	char	c;
@@ -175,7 +180,7 @@ int	parse_file(t_instructions **instructions, int fd)
 	{
 		if (c == '\n')
 		{
-			ret = handle_line(instructions, &line, &len, &cap, line_number);
+			ret = handle_line(instructions, &line, &len, &cap, line_number, stack);
 			line_number++;
 		}
 		else
@@ -184,7 +189,7 @@ int	parse_file(t_instructions **instructions, int fd)
 			return (ret);
 	}
 	if (len > 0)
-		return (handle_line(instructions, &line, &len, &cap, line_number));
+		return (handle_line(instructions, &line, &len, &cap, line_number, stack));
 	free(line);
 	return (0);
 }

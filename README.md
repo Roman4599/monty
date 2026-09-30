@@ -41,5 +41,11 @@ make
 - `EXIT_SUCCESS` on success
 - `EXIT_FAILURE` on error
 
+Every error message is written on `stderr`, the values printed by the instructions are written on `stdout`:
+- `USAGE: monty file` when the program is called without a file
+- `Error: Can't open file HoLbErToN` when the file given as argument can't be opened
+- `L<line_number>: usage: push integer` when `push` is used without a valid integer
+- `L<line_number>: unknown instruction <opcode>` when an opcode doesn't exist
+
 ## Authors
 [Roman4599](https://github.com/Roman4599)
