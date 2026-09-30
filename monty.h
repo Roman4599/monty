@@ -35,6 +35,7 @@ typedef struct s_instructions
  * @len: length of the line being read
  * @cap: capacity of the buffer of the line
  * @line_number: number of the line being read
+ * @arg: argument of the instruction being executed
  */
 typedef struct s_parser
 {
@@ -44,7 +45,21 @@ typedef struct s_parser
 	int				len;
 	int				cap;
 	int				line_number;
+	int				arg;
 }	t_parser;
+
+typedef int	(*t_op_func)(t_parser *parser);
+
+/**
+ * struct s_op - Entry of the table of the instructions
+ * @name: name of the instruction
+ * @func: function executing the instruction
+ */
+typedef struct s_op
+{
+	char		*name;
+	t_op_func	func;
+}	t_op;
 
 int	check_args(int argc, char **argv);
 int	open_file(char *path, int *fd);
@@ -53,9 +68,21 @@ int	parse_file(t_parser *parser, int fd);
 int	parse_line(t_parser *parser, char *line);
 int	handle_line(t_parser *parser);
 int	append_char(t_parser *parser, char c);
-int	execute_one(char *op, int arg, t_stack **stack);
-int	op_push(t_stack **stack, int arg);
-int	op_pall(t_stack *stack);
+t_op	*find_op(char *name);
+int	execute_one(char *op, t_parser *parser);
+int	op_push(t_parser *parser);
+int	op_pall(t_parser *parser);
+int	op_pint(t_parser *parser);
+int	op_pop(t_parser *parser);
+int	op_swap(t_parser *parser);
+int	op_add(t_parser *parser);
+int	op_sub(t_parser *parser);
+int	op_mul(t_parser *parser);
+int	op_div(t_parser *parser);
+int	op_mod(t_parser *parser);
+int	op_nop(t_parser *parser);
+int	stack_too_short(t_parser *parser, char *message);
+void	pop_top(t_parser *parser);
 int	error(int line_number, char *message);
 int	unknown_instruction(int line_number, char *op);
 int	fatal(char *message);

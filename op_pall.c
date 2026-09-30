@@ -1,15 +1,15 @@
 #include "monty.h"
 
 /**
- * op_pall - Print every value of the stack, from the top to the bottom
- * @stack: the stack
+ * op_pall - Print the values of the stack from the top to the bottom
+ * @parser: the state of the parser
  * Return: 0
  */
-int	op_pall(t_stack *stack)
+int	op_pall(t_parser *parser)
 {
 	t_stack	*node;
 
-	node = stack;
+	node = parser->stack;
 	while (node)
 	{
 		ft_putnbr(1, node->arg);

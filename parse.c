@@ -32,7 +32,7 @@ int	is_number(char *str)
  */
 int	is_instruction(char *op)
 {
-	if (!strcmp(op, "push") || !strcmp(op, "pall"))
+	if (find_op(op))
 		return (1);
 	return (0);
 }
@@ -87,5 +87,6 @@ int	parse_line(t_parser *parser, char *line)
 		value = atoi(arg);
 	if (add_instr(&parser->instructions, op, value))
 		return (EXIT_FAILURE);
-	return (execute_one(op, value, &parser->stack));
+	parser->arg = value;
+	return (execute_one(op, parser));
 }
