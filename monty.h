@@ -81,6 +81,7 @@ int	op_mul(t_parser *parser);
 int	op_div(t_parser *parser);
 int	op_mod(t_parser *parser);
 int	op_nop(t_parser *parser);
+int	op_pchar(t_parser *parser);
 int	stack_too_short(t_parser *parser, char *message);
 void	pop_top(t_parser *parser);
 int	error(int line_number, char *message);

@@ -22,6 +22,7 @@ Files containing Monty byte codes usually have the `.m` extension. Most of the i
 - `div`: Divides the second top element of the stack by the top element of the stack. The result is stored in the second top element and the top element is removed, so the stack is one element shorter and its top holds the result. If the stack holds less than two elements, prints the error message `L<line_number>: can't div, stack too short`, followed by a new line, and exits with status `EXIT_FAILURE`. If the top element of the stack is `0`, prints the error message `L<line_number>: division by zero`, followed by a new line, and exits with status `EXIT_FAILURE`.
 - `mod`: Computes the rest of the division of the second top element of the stack by the top element of the stack. The result is stored in the second top element and the top element is removed, so the stack is one element shorter and its top holds the result. If the stack holds less than two elements, prints the error message `L<line_number>: can't mod, stack too short`, followed by a new line, and exits with status `EXIT_FAILURE`. If the top element of the stack is `0`, prints the error message `L<line_number>: division by zero`, followed by a new line, and exits with status `EXIT_FAILURE`.
 - `nop`: Doesn't do anything.
+- `pchar`: Prints the char at the top of the stack, followed by a new line. The integer stored at the top of the stack is treated as the ascii value of the character to be printed. If the stack is empty, prints the error message `L<line_number>: can't pchar, stack empty`, followed by a new line, and exits with status `EXIT_FAILURE`. If the value is not in the ascii table, prints the error message `L<line_number>: can't pchar, value out of range`, followed by a new line, and exits with status `EXIT_FAILURE`.
 
 ## Examples
 ```
@@ -58,6 +59,8 @@ Every error message is written on `stderr`, the values printed by the instructio
 - `L<line_number>: usage: push integer` when `push` is used without a valid integer
 - `L<line_number>: can't pint, stack empty` when `pint` is used on an empty stack
 - `L<line_number>: can't pop an empty stack` when `pop` is used on an empty stack
+- `L<line_number>: can't pchar, stack empty` when `pchar` is used on an empty stack
+- `L<line_number>: can't pchar, value out of range` when `pchar` is used with a value that is not in the ascii table
 - `L<line_number>: can't <opcode>, stack too short` when `swap`, `add`, `sub`, `mul`, `div` or `mod` is used with less than two elements on the stack
 - `L<line_number>: division by zero` when `div` or `mod` divides by `0`
 - `L<line_number>: unknown instruction <opcode>` when an opcode doesn't exist

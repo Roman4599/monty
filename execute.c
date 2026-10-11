@@ -13,6 +13,7 @@ static t_op	g_ops[] = {
 	{"div", op_div},
 	{"mod", op_mod},
 	{"nop", op_nop},
+	{"pchar", op_pchar},
 	{NULL, NULL}
 };
 
