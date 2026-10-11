@@ -75,7 +75,7 @@ int	parse_line(t_parser *parser, char *line)
 	int		value;
 
 	op = next_token(&line);
-	if (!op[0])
+	if (!op[0] || op[0] == '#')
 		return (0);
 	arg = next_token(&line);
 	if (!strcmp(op, "push") && (!arg[0] || !is_number(arg)))
