@@ -46,6 +46,7 @@ typedef struct s_parser
 	int				cap;
 	int				line_number;
 	int				arg;
+	int				is_queue;
 }	t_parser;
 
 typedef int	(*t_op_func)(t_parser *parser);
@@ -82,6 +83,11 @@ int	op_div(t_parser *parser);
 int	op_mod(t_parser *parser);
 int	op_nop(t_parser *parser);
 int	op_pchar(t_parser *parser);
+int	op_pstr(t_parser *parser);
+int	op_rotl(t_parser *parser);
+int	op_rotr(t_parser *parser);
+int	op_stack(t_parser *parser);
+int	op_queue(t_parser *parser);
 int	stack_too_short(t_parser *parser, char *message);
 void	pop_top(t_parser *parser);
 int	error(int line_number, char *message);

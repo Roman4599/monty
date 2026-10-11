@@ -21,6 +21,8 @@ int	main(int argc, char **argv)
 	parser.len = 0;
 	parser.cap = 0;
 	parser.line_number = 1;
+	parser.arg = 0;
+	parser.is_queue = 0;
 	if (open_file(argv[1], &fd))
 		return (EXIT_FAILURE);
 	ret = parse_file(&parser, fd);

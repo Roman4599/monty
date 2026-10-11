@@ -23,6 +23,11 @@ Files containing Monty byte codes usually have the `.m` extension. Most of the i
 - `mod`: Computes the rest of the division of the second top element of the stack by the top element of the stack. The result is stored in the second top element and the top element is removed, so the stack is one element shorter and its top holds the result. If the stack holds less than two elements, prints the error message `L<line_number>: can't mod, stack too short`, followed by a new line, and exits with status `EXIT_FAILURE`. If the top element of the stack is `0`, prints the error message `L<line_number>: division by zero`, followed by a new line, and exits with status `EXIT_FAILURE`.
 - `nop`: Doesn't do anything.
 - `pchar`: Prints the char at the top of the stack, followed by a new line. The integer stored at the top of the stack is treated as the ascii value of the character to be printed. If the stack is empty, prints the error message `L<line_number>: can't pchar, stack empty`, followed by a new line, and exits with status `EXIT_FAILURE`. If the value is not in the ascii table, prints the error message `L<line_number>: can't pchar, value out of range`, followed by a new line, and exits with status `EXIT_FAILURE`.
+- `pstr`: Prints the string starting at the top of the stack, followed by a new line. The integers stored in the stack are treated as the ascii values of the characters to be printed. Printing stops when the stack is empty, when the value is `0`, or when the value is not in the ascii table.
+- `rotl`: Rotates the stack to the top. The top element of the stack becomes the last one, and the second top element of the stack becomes the first one.
+- `rotr`: Rotates the stack to the bottom. The last element of the stack becomes the top one, and the top element of the stack becomes the second top one.
+- `stack`: Sets the format of the data to a stack (LIFO). This is the default behavior of the program.
+- `queue`: Sets the format of the data to a queue (FIFO). When the format is a queue, the pushed data is added at the end of the list, otherwise it is added at the top of the list.
 
 ## Examples
 ```
@@ -64,6 +69,15 @@ Every error message is written on `stderr`, the values printed by the instructio
 - `L<line_number>: can't <opcode>, stack too short` when `swap`, `add`, `sub`, `mul`, `div` or `mod` is used with less than two elements on the stack
 - `L<line_number>: division by zero` when `div` or `mod` divides by `0`
 - `L<line_number>: unknown instruction <opcode>` when an opcode doesn't exist
+
+## Brainf*ck
+
+The `bf` directory contains Brainf*ck scripts, run with the `bf` interpreter (`sudo apt-get install bf`):
+
+- `1000-school.bf`: Prints `School`, followed by a new line.
+- `1001-add.bf`: Reads two digits from stdin, adds them, and prints the result.
+- `1002-mul.bf`: Reads two digits from stdin, multiplies them, and prints the result.
+- `1003-mul.bf`: Reads two digits from stdin, multiplies them, and prints the result, followed by a new line.
 
 ## Authors
 [Roman4599](https://github.com/Roman4599)

@@ -19,6 +19,11 @@ SRCS	= main.c \
 		op_mod.c \
 		op_nop.c \
 		op_pchar.c \
+		op_pstr.c \
+		op_rotl.c \
+		op_rotr.c \
+		op_stack.c \
+		op_queue.c \
 		stack.c \
 		error.c \
 		ft_printf.c \
